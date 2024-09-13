@@ -43,7 +43,6 @@ BEGIN
  print 'ya existe la tabla';
 END
 GO
-
 ---------------------
 If not Exists(Select * from sys.indexes where object_id=OBJECT_ID(N'dbo.customer')and name='IDX_customer_name_')
 Begin
@@ -55,35 +54,7 @@ End
  End
 GO
 
-------- CATEGORIA DE CLIENTE 
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'customer_category') AND type = N'U')
-BEGIN
-    CREATE TABLE customer_category (
-        id INT PRIMARY KEY IDENTITY(1,1),
-	[name] VARCHAR(50) NOT NULL,
-	id_customer INT NOT NULL,
-	FOREIGN KEY (id_customer) REFERENCES customer(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	CONSTRAINT UQ_customer_category_name UNIQUE([name])
-    );
-END ELSE
-BEGIN
- print 'ya existe la tabla';
-END
-GO
--------------------------
-If not Exists(select * from sys.indexes where object_id=OBJECT_ID(N'dbo.customer_category')and name='_IDX_customer_category_')
-Begin
-CREATE INDEX _IDX_customer_category_ ON customer_category([name]);
-End
- Else
-Begin
- print 'El índice ya ha sido creado'; 
-END
-GO
 
--------------
 ---------TARJETA DE VIAJERO FRECUENTE 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'frequent_flyer_card') AND type = N'U')
 BEGIN
@@ -116,6 +87,98 @@ Begin
 End
 GO
 
+-------- DOCUMENTO DE IDENTIFICACION ---------
+IF NOT EXISTS(SELECT* FROM sys.objects where object_id=OBJECT_ID(N'identification_document') and type=N'U' )
+BEGIN
+CREATE TABLE identification_document(
+	id INT PRIMARY KEY IDENTITY(1,1),
+	document_number VARCHAR(50) NOT NULL,
+	document_type VARCHAR(30) NOT NULL,
+	issue_date DATE NOT NULL,
+	expiration_date DATE NOT NULL,
+	issue_country INT NOT NULL,
+	FOREIGN KEY (issue_country) REFERENCES country(id),
+	CONSTRAINT UQ_identification_document_document_number UNIQUE(document_number),
+	CONSTRAINT CHK_identification_document_issue_date CHECK(issue_date<=GETDATE()),
+	CONSTRAINT CHK_identification_document_expiration_date CHECK(expiration_date>GETDATE()),
+)
+END
+ ELSE
+BEGIN
+print 'La tabla ya existe!!!';
+END
+GO
+---------
+
+If Not Exists(select * from sys.indexes where object_id=OBJECT_ID(N'dbo.identification_document')and name='IDX_identification_document_document_number_')
+Begin
+CREATE INDEX IDX_identification_document_document_number_ ON identification_document(document_number);
+ print'Índice creado exitosamente!!!'
+End
+ Else
+Begin
+ print'El índice ya ah sido creado';
+End
+GO
+
+------------------ METODO DE PAGO  -------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'payment_method')and type=N'U')
+Begin
+CREATE TABLE payment_method (
+    id INT PRIMARY KEY IDENTITY(1,1),
+	number_card VARCHAR(255),
+    CONSTRAINT UQ_number_card UNIQUE(number_card)
+);
+End
+ Else
+Begin
+print 'La tabla ya existe'
+End
+GO
+
+------------------ PAGO  -------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'payment')and type=N'U')
+Begin
+CREATE TABLE payment (
+    id INT PRIMARY KEY IDENTITY(1,1),
+	amount FLOAT NOT NULL,
+	date_of_pay DATE NOT NULL,
+	id_payment_method INT NOT NULL,
+    CONSTRAINT CHK_date_of_pay CHECK(date_of_pay>getDate()),
+	CONSTRAINT CHK_amount CHECK(amount>=0)
+);
+End
+ Else
+Begin
+print 'La tabla ya existe'
+End
+GO
+
+
+------------------ RESERVAS -------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'reservation')and type=N'U')
+Begin
+CREATE TABLE reservation (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    reservation_code VARCHAR(50) NOT NULL,
+    reservation_date DATE NOT NULL,
+    id_customer INT NOT NULL,
+	id_identification_document INT NOT NULL,
+	id_payment INT NOT NULL,
+    FOREIGN KEY(id_customer) REFERENCES customer(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+	FOREIGN KEY(id_identification_document) REFERENCES identification_document(id),
+	FOREIGN KEY(id_payment) REFERENCES payment(id),
+    CONSTRAINT UQ_reservation_code UNIQUE(reservation_code),
+    CONSTRAINT CHK_reservation_date CHECK (reservation_date >= GETDATE())
+);
+End
+ Else
+Begin
+print 'La tabla ya existe'
+End
+GO
 
 ------------   TICKET   ----------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'ticket') AND type = N'U')
@@ -124,8 +187,8 @@ BEGIN
 	id INT PRIMARY KEY IDENTITY(1,1),
 	ticketing_code INT NOT NULL,
 	number INT NOT NULL,
-	id_customer INT NOT NULL,
-	FOREIGN KEY (id_customer) REFERENCES customer(id)
+	id_reservation INT NOT NULL,
+	FOREIGN KEY (id_reservation) REFERENCES reservation(id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	CONSTRAINT UQ_ticket_ticketing_code_number UNIQUE (ticketing_code, number)
@@ -136,7 +199,41 @@ BEGIN
 END
 GO
 
+------------  CHECKIN-----------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'checkin')and type=N'U')
+Begin
+CREATE TABLE checkin (
+    id INT PRIMARY KEY IDENTITY(1,1),
+	[date] DATE NOT NULL,
+	[time] TIME NOT NULL,
+	id_ticket INT NOT NULL,
+	FOREIGN KEY(id_ticket) REFERENCES ticket(id),
+    CONSTRAINT CHK_date CHECK([date]>getDate())
+);
+End
+ Else
+Begin
+print 'La tabla ya existe'
+End
+GO
 
+------------  CANCELACION-----------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'cancellation')and type=N'U')
+Begin
+CREATE TABLE cancellation (
+    id INT PRIMARY KEY IDENTITY(1,1),
+	[date] DATE NOT NULL,
+	[time] TIME NOT NULL,
+	id_ticket INT NOT NULL,
+	FOREIGN KEY(id_ticket) REFERENCES ticket(id),
+    CONSTRAINT CHK_date CHECK([date]>getDate())
+);
+End
+ Else
+Begin
+print 'La tabla ya existe'
+End
+GO
 -------------------- PAIS ------------------
 IF NOT EXISTS( SELECT* FROM sys.objects WHERE object_id=OBJECT_ID (N'country') and type=N'U')
 BEGIN
@@ -213,42 +310,7 @@ BEGIN
 END
 GO
 
--------- DOCUMENTO DE IDENTIFICACION ---------
-IF NOT EXISTS(SELECT* FROM sys.objects where object_id=OBJECT_ID(N'identification_document') and type=N'U' )
-BEGIN
-CREATE TABLE identification_document(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	document_number VARCHAR(50) NOT NULL,
-	document_type VARCHAR(30) NOT NULL,
-	issue_date DATE NOT NULL,
-	expiration_date DATE NOT NULL,
-	issue_country INT NOT NULL,
-	id_customer INT NOT NULL,
-	FOREIGN KEY (issue_country) REFERENCES country(id),
-	FOREIGN KEY (id_customer) REFERENCES customer(id),
-	CONSTRAINT UQ_identification_document_document_number UNIQUE(document_number),
-	CONSTRAINT CHK_identification_document_issue_date CHECK(issue_date<=GETDATE()),
-	CONSTRAINT CHK_identification_document_expiration_date CHECK(expiration_date>GETDATE()),
-	CONSTRAINT CHK_identification_document_issue_country CHECK(issue_country>0)
-)
-END
- ELSE
-BEGIN
-print 'La tabla ya existe!!!';
-END
-GO
----------
 
-If Not Exists(select * from sys.indexes where object_id=OBJECT_ID(N'dbo.identification_document')and name='IDX_identification_document_document_number_')
-Begin
-CREATE INDEX IDX_identification_document_document_number_ ON identification_document(document_number);
- print'Índice creado exitosamente!!!'
-End
- Else
-Begin
- print'El índice ya ah sido creado';
-End
-GO
 
 ---------------- CIUDAD ------------------
 IF NOT EXISTS(SELECT * FROM sys.objects where object_id=OBJECT_ID(N'city') and type=N'U' )
@@ -419,6 +481,36 @@ print 'La tabla ya existe!!!';
 End
 GO
 
+------- CATEGORIA DE CLIENTE 
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'customer_category') AND type = N'U')
+BEGIN
+    CREATE TABLE customer_category (
+        id INT PRIMARY KEY IDENTITY(1,1),
+	[name] VARCHAR(50) NOT NULL,
+	id_customer INT NOT NULL,
+	FOREIGN KEY (id_customer) REFERENCES customer(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT UQ_customer_category_name UNIQUE([name])
+    );
+END ELSE
+BEGIN
+ print 'ya existe la tabla';
+END
+GO
+-------------------------
+If not Exists(select * from sys.indexes where object_id=OBJECT_ID(N'dbo.customer_category')and name='_IDX_customer_category_')
+Begin
+CREATE INDEX _IDX_customer_category_ ON customer_category([name]);
+End
+ Else
+Begin
+ print 'El índice ya ha sido creado'; 
+END
+GO
+
+-------------
+
 
 --------------------- EQUIPAJE ---------------------
 If not Exists(select *from sys.objects where object_id=OBJECT_ID(N'pieces_of_luggage')and type=N'U')
@@ -513,26 +605,7 @@ End
 GO
 
 
------------------- 5 RESERVAS -------------
-If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'reservation')and type=N'U')
-Begin
-CREATE TABLE reservation (
-    id INT PRIMARY KEY IDENTITY(1,1),
-    reservation_code VARCHAR(50) NOT NULL,
-    reservation_date DATE NOT NULL,
-    id_passenger INT NOT NULL,
-    FOREIGN KEY(id_passenger) REFERENCES passenger(id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-    CONSTRAINT UQ_reservation_code UNIQUE(reservation_code),
-    CONSTRAINT CHK_reservation_date CHECK (reservation_date >= GETDATE())
-);
-End
- Else
-Begin
-print 'La tabla ya existe'
-End
-GO
+
 
 
 ----------------------- AVION ----------------
