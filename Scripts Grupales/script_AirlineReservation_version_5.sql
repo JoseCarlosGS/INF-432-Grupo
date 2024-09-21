@@ -38,6 +38,7 @@ ALTER DATABASE AirlineReservation
 SET SINGLE_USER
 WITH ROLLBACK IMMEDIATE;
 GO
+USE master;
 DROP DATABASE AirlineReservation;
 GO
 ---------*******************
@@ -85,10 +86,6 @@ DBCC CHECKIDENT ('city', RESEED, 0);
 SELECT * FROM airport WHERE id_city = 5;
 
 --------------**********
-SELECT city."name" AS nombre_ciudad, country."name" AS nombre_pais
-FROM city
-JOIN country ON city.id_country = country.id_country
-WHERE city.id_country = 1;
 
 
 
@@ -747,26 +744,3 @@ End
  print'La tabla ya existe!!!'; 
  End
 GO
-
---------- transferencia vuelo-------
-If not Exists(select* from sys.objects where object_id=OBJECT_ID(N'flight_transfer')and type=N'U')
-Begin
-CREATE TABLE flight_transfer(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	transfer_time TIME NOT NULL,
-	experience_years INT,
-	id_flight_from INT NOT NULL,
-	id_flight_to INT NOT NULL,
-	id_ticket INT NOT NULL,
-	FOREIGN KEY (id_flight_from) REFERENCES flight(id),
-	FOREIGN KEY (id_flight_to) REFERENCES flight(id),
-	FOREIGN KEY (id_ticket) REFERENCES ticket(id)
-)
-End
- Else
-Begin
- print'La tabla ya existe!!!';
-End
-GO
-
-----------------------------------------------------------

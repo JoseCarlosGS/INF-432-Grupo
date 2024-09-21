@@ -28,6 +28,22 @@ GO
 --DROP TABLE customers;
 --GO
 
+
+------- persona------------
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'person') AND type = N'U')
+BEGIN
+    CREATE TABLE person (
+        id INT PRIMARY KEY IDENTITY(1,1),
+	[name] VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	CONSTRAINT UQ_person_name UNIQUE([name])
+    );
+END ELSE
+BEGIN
+ print 'ya existe la tabla';
+END
+GO
+
 ----- CLIENTE---------------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'customer') AND type = N'U')
 BEGIN
@@ -35,6 +51,8 @@ BEGIN
 	id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	date_of_birth DATE NOT NULL,
 	[name] VARCHAR(255),
+	id_person INT NOT NULL,
+	FOREIGN KEY(id_person) REFERENCES person(id),
 	CONSTRAINT CHK_customer_date_of_birth 
 	CHECK (date_of_birth < GETDATE())
 );
@@ -43,7 +61,7 @@ BEGIN
  print 'ya existe la tabla';
 END
 GO
----------------------
+
 If not Exists(Select * from sys.indexes where object_id=OBJECT_ID(N'dbo.customer')and name='IDX_customer_name_')
 Begin
 CREATE INDEX IDX_customer_name_ ON customer([name]);
@@ -106,7 +124,7 @@ BEGIN
 print'La tabla ya existe!!!'
 END
 GO
-------------------
+
 IF NOT EXISTS (
     SELECT * 
     FROM sys.indexes 
@@ -120,29 +138,6 @@ END;
  ELSE
 Begin
 print 'El índice ya ah sido creado!!!'
-End
-GO
-
----- NUMERO DE VUELO ------------
-If not Exists(Select * from sys.objects where object_id=OBJECT_ID(N'flight_number')and type=N'U')
-Begin
-CREATE TABLE flight_number(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	departure_time TIME NOT NULL,
-	"description" VARCHAR(255),
-	"type" VARCHAR(255) NOT NULL,
-	airline VARCHAR(255) NOT NULL,
-	id_airport_start INT NOT NULL,
-	id_airport_goal INT NOT NULL,
-	FOREIGN KEY(id_airport_start) REFERENCES airport(id),
-	FOREIGN KEY(id_airport_goal) REFERENCES airport(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-)
-End
- Else
-Begin
-print 'La tabla ya existe!!!'
 End
 GO
 
@@ -162,7 +157,7 @@ END
   print 'La tabla ya existe!!!';
  END
 GO
---------------------
+
 IF NOT EXISTS(SELECT * FROM sys.indexes WHERE object_id=OBJECT_ID(N'dbo.airline')and name=N'IDX_airline_name')
 BEGIN
 CREATE INDEX IDX_airline_name ON airline([name]);
@@ -172,6 +167,33 @@ BEGIN
   print 'El índice ya ah sido creado';
 END
 GO
+
+---- NUMERO DE VUELO ------------
+If not Exists(Select * from sys.objects where object_id=OBJECT_ID(N'flight_number')and type=N'U')
+Begin
+CREATE TABLE flight_number(
+	id INT PRIMARY KEY IDENTITY(1,1),
+	departure_time TIME NOT NULL,
+	"description" VARCHAR(255),
+	"type" VARCHAR(255) NOT NULL,
+	airline VARCHAR(255) NOT NULL,
+	id_airport_start INT NOT NULL,
+	id_airport_goal INT NOT NULL,
+	id_airline INT NOT NULL,
+	FOREIGN KEY(id_airline) REFERENCES airline(id),
+	FOREIGN KEY(id_airport_start) REFERENCES airport(id),
+	FOREIGN KEY(id_airport_goal) REFERENCES airport(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+)
+End
+ Else
+Begin
+print 'La tabla ya existe!!!'
+End
+GO
+
+
 
 ---------TARJETA DE VIAJERO FRECUENTE 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'frequent_flyer_card') AND type = N'U')
@@ -193,7 +215,7 @@ BEGIN
  print 'ya existe la tabla';
 END
 GO
----------------------
+
 If Not Exists(select * from sys.indexes where object_id=OBJECT_ID (N'dbo.frequent_flyer_card')and name='_IDX_frequent_flyer_card_ffc_number_')
 Begin
 CREATE INDEX _IDX_frequent_flyer_card_ffc_number_ ON frequent_flyer_card(ffc_number);
@@ -242,7 +264,6 @@ BEGIN
 print 'La tabla ya existe!!!';
 END
 GO
----------
 
 If Not Exists(select * from sys.indexes where object_id=OBJECT_ID(N'dbo.identification_document')and name='IDX_identification_document_document_number_')
 Begin
@@ -288,6 +309,44 @@ print 'La tabla ya existe'
 End
 GO
 
+
+--------- MODELO DE AVION ---------------
+If Not Exists(select * from sys.objects where object_id=OBJECT_ID(N'plane_model')and type=N'U')
+Begin
+CREATE TABLE plane_model(
+	id INT PRIMARY KEY IDENTITY(1,1),
+	"description" VARCHAR(255),
+	graphic VARCHAR(255),
+)
+End
+ Else
+Begin
+print'La tabla ya existe!!!';
+End
+GO
+
+----------------------- AVION ----------------
+If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'airplane')and type=N'U')
+Begin
+CREATE TABLE airplane(
+	id INT PRIMARY KEY IDENTITY(1,1),
+	registration_number VARCHAR(15) NOT NULL,
+	begin_of_operation DATE NOT NULL,
+	"status" VARCHAR(50),
+	id_plane_model INT NOT NULL,
+	FOREIGN KEY (id_plane_model) REFERENCES plane_model(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT UQ_airplane_registration_number UNIQUE(registration_number),
+	CONSTRAINT CHK_airplane_begin_of_operation CHECK(begin_of_operation<=GETDATE())
+);
+End
+ Else
+ Begin
+ print 'La tabla ya existe!!!';
+ End
+GO
+
 -------------------- VUELO ---------------
 If Not Exists(select *from sys.objects where object_id=OBJECT_ID(N'flight')and type=N'U')
 Begin
@@ -298,11 +357,11 @@ CREATE TABLE flight(
 	gate VARCHAR(10) NOT NULL,
 	check_in_counter VARCHAR(10) NOT NULL,
 	id_flight_number INT NOT NULL,
-	id_airline INT NOT NULL,
+	id_airplane INT NOT NULL,
 	FOREIGN KEY(id_flight_number) REFERENCES flight_number(id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
-	FOREIGN KEY(id_airline) REFERENCES airline(id),
+	FOREIGN KEY(id_airplane) REFERENCES airplane(id),
 	CONSTRAINT CHK_flight_flight_date CHECK(flight_date>GETDATE())
 )
 End
@@ -320,12 +379,10 @@ CREATE TABLE reservation (
     reservation_code VARCHAR(50) NOT NULL,
     reservation_date DATE NOT NULL,
     id_customer INT NOT NULL,
-	id_flight INT NOT NULL,
 	id_payment INT NOT NULL,
     FOREIGN KEY(id_customer) REFERENCES customer(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-	FOREIGN KEY(id_flight) REFERENCES flight(id),
 	FOREIGN KEY(id_payment) REFERENCES payment(id),
     CONSTRAINT UQ_reservation_code UNIQUE(reservation_code),
     CONSTRAINT CHK_reservation_date CHECK (reservation_date >= GETDATE())
@@ -345,6 +402,10 @@ BEGIN
 	ticketing_code INT NOT NULL,
 	number INT NOT NULL,
 	id_reservation INT NOT NULL,
+	id_person INT NOT NULL,
+	id_identification_document INT NOT NULL,
+	FOREIGN KEY(id_identification_document) REFERENCES identification_document(id),
+	FOREIGN KEY (id_person) REFERENCES person(id),
 	FOREIGN KEY (id_reservation) REFERENCES reservation(id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
@@ -392,20 +453,7 @@ print 'La tabla ya existe'
 End
 GO
 
---------- MODELO DE AVION ---------------
-If Not Exists(select * from sys.objects where object_id=OBJECT_ID(N'plane_model')and type=N'U')
-Begin
-CREATE TABLE plane_model(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	"description" VARCHAR(255),
-	graphic VARCHAR(255),
-)
-End
- Else
-Begin
-print'La tabla ya existe!!!';
-End
-GO
+
 
 ------- CLASEv-----------------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'coupon_class') AND type = N'U')
@@ -514,27 +562,7 @@ End
 GO
 
 
------------------------ AVION ----------------
-If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'airplane')and type=N'U')
-Begin
-CREATE TABLE airplane(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	registration_number VARCHAR(15) NOT NULL,
-	begin_of_operation DATE NOT NULL,
-	"status" VARCHAR(50),
-	id_plane_model INT NOT NULL,
-	FOREIGN KEY (id_plane_model) REFERENCES plane_model(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	CONSTRAINT UQ_airplane_registration_number UNIQUE(registration_number),
-	CONSTRAINT CHK_airplane_begin_of_operation CHECK(begin_of_operation<=GETDATE())
-);
-End
- Else
- Begin
- print 'La tabla ya existe!!!';
- End
-GO
+
 
 ----------------PERIODO DE USO----------------
 If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'aircraft_assignment')and type=N'U')
@@ -559,58 +587,6 @@ End
  End
 GO
 
-----------TRAMOS-------------------------------
-If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'leg')and type=N'U')
-Begin
-CREATE TABLE leg(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	duration TIME NOT NULL,
-	id_airplane INT NOT NULL,
-	id_airport_start INT NOT NULL,
-	id_airport_goal INT NOT NULL,
-	id_flight_number INT NOT NULL,
-	FOREIGN KEY(id_airport_start) REFERENCES airport(id),
-	FOREIGN KEY(id_flight_number) REFERENCES flight_number(id),
-	FOREIGN KEY(id_airport_goal) REFERENCES airport(id),
-	FOREIGN KEY (id_airplane) REFERENCES airplane(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-);
-End
- Else
- Begin
- print 'La tabla ya existe!!!';
- End
-GO
-
-----------------ESCALAS----------------
-If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'stops')and type=N'U')
-Begin
-CREATE TABLE stops(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	stop_order INT NOT NULL,
-	arrival_time TIME NOT NULL,
-	arrival_date DATE NOT NULL,
-	departure_time TIME NOT NULL,
-	departure_date DATE NOT NULL,
-	id_airport INT NOT NULL,
-	id_leg INT NOT NULL,
-	FOREIGN KEY (id_airport) REFERENCES airport(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	FOREIGN KEY(id_leg) REFERENCES leg(id),
-	CONSTRAINT chk_departure_after_arrival CHECK (
-		(departure_date > arrival_date) OR
-		(departure_date = arrival_date AND departure_time > arrival_time)
-	),
-);
-End
- Else
- Begin
- print 'La tabla ya existe!!!';
- End
-GO
-
 
 ------- rol ----------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'role_flight') AND type = N'U')
@@ -626,20 +602,6 @@ BEGIN
 END
 GO
 
-------- persona------------
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'person') AND type = N'U')
-BEGIN
-    CREATE TABLE person (
-        id INT PRIMARY KEY IDENTITY(1,1),
-	[name] VARCHAR(50) NOT NULL,
-	last_name VARCHAR(50) NOT NULL,
-	CONSTRAINT UQ_person_name UNIQUE([name])
-    );
-END ELSE
-BEGIN
- print 'ya existe la tabla';
-END
-GO
 
 
 ---------------- 3 TRIPULACION DE VUELO ------------------
@@ -682,33 +644,7 @@ End
  End
 GO
 
---------- transferencia vuelo-------
-If not Exists(select* from sys.objects where object_id=OBJECT_ID(N'flight_transfer')and type=N'U')
-Begin
-CREATE TABLE flight_transfer(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	transfer_time TIME NOT NULL,
-	experience_years INT,
-	id_flight_from INT NOT NULL,
-	id_flight_to INT NOT NULL,
-	id_ticket INT NOT NULL,
-	FOREIGN KEY (id_flight_from) REFERENCES flight(id),
-	FOREIGN KEY (id_flight_to) REFERENCES flight(id),
-	FOREIGN KEY (id_ticket) REFERENCES ticket(id)
-)
-End
- Else
-Begin
- print'La tabla ya existe!!!';
-End
-GO
-
-SELECT * FROM customer
-
-INSERT INTO customer VALUES('1997-12-12', 'Jose Carlos Giron');
-
-delete from customer
-
+/*
 BULK INSERT
 	customer
 FROM 
@@ -718,3 +654,4 @@ WITH(
 	ROWTERMINATOR = '\n',
 	FIRSTROW = 1
 )
+*/
