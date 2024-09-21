@@ -703,114 +703,18 @@ Begin
 End
 GO
 
-----------------------------------------------------------
+SELECT * FROM customer
 
-INSERT INTO customer (date_of_birth, "name") VALUES
-('1985-06-15', 'Hector Contreras'),
-('1990-09-22', 'Diana Salas'),
-('1978-11-30', 'Alicia Montalbán'),
-('2001-04-12', 'Victor Cárdenas');
+INSERT INTO customer VALUES('1997-12-12', 'Jose Carlos Giron');
 
-INSERT INTO customer_category ([name], id_customer) VALUES
-('Regular', 1),
-('VIP', 2),
-('Frequent', 3),
-('Occasional', 4);
+delete from customer
 
-INSERT INTO frequent_flyer_card (ffc_number, miles, meal_code, id_customer) VALUES
-(1001, 15000, 'VGML', 1),
-(1002, 20000, 'KSML', 2),
-(1003, 5000, NULL, 3),
-(1004, 12000, 'GFML', 4);
-
-INSERT INTO ticket (ticketing_code, number, id_customer) VALUES
-(111, 1, 1),
-(112, 2, 2),
-(113, 3, 3),
-(114, 4, 4);
-
-INSERT INTO country (name) VALUES
-('USA'),
-('Canada'),
-('UK'),
-('Germany'),
-('France');
-
-INSERT INTO city (name, id_country) VALUES
-('New York', 1),
-('Toronto', 2),
-('London', 3),
-('Berlin', 4),
-('Paris', 5);
-
-INSERT INTO identification_document (document_number, issue_date, expiration_date, issue_country, id_customer) VALUES
-('A1234567', '2010-01-01', '2020-12-31', 1, 1),
-('B2345678', '2012-05-15', '2022-05-14', 2, 2),
-('C3456789', '2015-09-01', '2025-08-31', 3, 3),
-('D4567890', '2018-11-20', '2028-11-19', 4, 4);
-
-INSERT INTO airport (name, id_city) VALUES
-('JFK International Airport', 1),
-('Toronto Pearson International Airport', 2),
-('Heathrow Airport', 3),
-('Berlin Brandenburg Airport', 4);
-
-INSERT INTO plane_model (description, graphic) VALUES
-('Boeing 737', 'graphic1.png'),
-('Airbus A320', 'graphic2.png'),
-('Boeing 787', 'graphic3.png'),
-('Airbus A380', 'graphic4.png'),
-('Boeing 747', 'graphic5.png');
-
-INSERT INTO flight_number (departure_time, "description", "type", airline, id_airport_start, id_airport_goal, id_plane_model) VALUES
-('10:00:00', 'Morning Flight to London', 'International', 'British Airways', 1, 4, 4),
-('12:30:00', 'Afternoon Flight to Toronto', 'International', 'Air Canada', 1, 2, 2),
-('15:45:00', 'Evening Flight to Mexico City', 'International', 'Aerom�xico', 1, 3, 1),
-('08:00:00', 'Early Flight to New York', 'Domestic', 'American Airlines', 4, 1, 1);
-
-INSERT INTO flight (boarding_time, flight_date, gate, check_in_counter, id_flight_number) VALUES
-('10:00:00', '2024-09-15', 'A1', '1', 1),
-('12:30:00', '2024-09-16', 'B2', '2', 2),
-('15:45:00', '2024-09-17', 'C3', '3', 3),
-('08:00:00', '2024-09-18', 'D4', '4', 4);
-
-INSERT INTO coupon (id_ticket, date_of_redemption, class, stand_by, meal_code, id_flight) VALUES
-(1, '2024-08-15', 'Economy', NULL, 'VGML', 1),
-(2, '2024-08-16', 'Business', 'Yes', 'KSML', 2),
-(3, '2024-08-17', 'First', NULL, 'GFML', 3),
-(4, '2024-08-18', 'Economy', 'No', NULL, 4);
-
-
-INSERT INTO pieces_of_luggage (number, weight, id_coupon) VALUES
-(1, 23.50, 1),
-(2, 18.75, 2),
-(3, 20.00, 3),
-(4, 15.00, 4);
-
-INSERT INTO flight (boarding_time, flight_date, gate, check_in_counter, id_flight_number) VALUES
-('07:30:00', '2024-08-01', 'A1', '1', 1),
-('11:30:00', '2024-08-02', 'B2', '2',2 ),
-('16:00:00', '2024-08-03', 'C3', '3', 3),
-('20:00:00', '2024-08-04', 'D4', '4', 4),
-('23:00:00', '2024-08-05', 'E5', '5', 5);
-
-INSERT INTO seat (size, number, "location", id_plane_model) VALUES
-(2.00, 1, 'Window', 1),
-(2.00, 2, 'Aisle', 1),
-(2.50, 3, 'Window', 2),
-(2.50, 4, 'Middle', 2);
-
-
-INSERT INTO available_seat (id_coupon, id_flight, id_seat) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4);
-
-INSERT INTO airplane (registration_number, begin_of_operation, "status", id_plane_model) VALUES
-('N12345', '2010-01-01', 'Active', 1),
-('C67890', '2015-05-15', 'Active', 2),
-('G54321', '2020-10-10', 'Maintenance', 3),
-('B09876', '2018-03-25', 'Retired', 4);
-
---select * from airplane;
+BULK INSERT
+	customer
+FROM 
+	'D:\Carlos\Semestre2-2024Apuntes\Sistmas para el soporte\prueba.csv'
+WITH(
+	FIELDTERMINATOR = ',',
+	ROWTERMINATOR = '\n',
+	FIRSTROW = 1
+)
