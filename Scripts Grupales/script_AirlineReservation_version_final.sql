@@ -52,6 +52,9 @@ End
  End
 GO
 
+select * from customer
+TRUNCATE TABLE customer;
+
 ----- CLIENTE---------------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'customer') AND type = N'U')
 BEGIN
@@ -275,13 +278,14 @@ Begin
 End
 GO
 
+select * from payment_method
 ------------------ METODO DE PAGO  -------------
 If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'payment_method')and type=N'U')
 Begin
 CREATE TABLE payment_method (
     id INT PRIMARY KEY IDENTITY(1,1),
 	number_card VARCHAR(255),
-    CONSTRAINT UQ_number_card UNIQUE(number_card)
+	type_method VARCHAR(20),
 );
 End
  Else
@@ -298,7 +302,7 @@ CREATE TABLE payment (
 	amount FLOAT NOT NULL,
 	date_of_pay DATE NOT NULL,
 	id_payment_method INT NOT NULL,
-    CONSTRAINT CHK_date_of_pay CHECK(date_of_pay>getDate()),
+    -- CONSTRAINT CHK_date_of_pay CHECK(date_of_pay>getDate()),
 	CONSTRAINT CHK_amount CHECK(amount>=0)
 );
 End
