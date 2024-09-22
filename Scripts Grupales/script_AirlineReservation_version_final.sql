@@ -229,6 +229,7 @@ Begin
 End
 GO
 
+
 -------------------- TIPO DE DOCUMENTO ------------------
 IF NOT EXISTS( SELECT* FROM sys.objects WHERE object_id=OBJECT_ID (N'document_type(') and type=N'U')
 BEGIN
@@ -374,6 +375,7 @@ print'La tabla ya existe!!!';
 End
 GO
 
+select * from reservation
 ------------------ RESERVAS -------------
 If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'reservation')and type=N'U')
 Begin
@@ -394,6 +396,22 @@ End
  Else
 Begin
 print 'La tabla ya existe'
+End
+GO
+
+IF NOT EXISTS (
+    SELECT * 
+    FROM sys.indexes 
+    WHERE object_id = OBJECT_ID(N'dbo.reservation') 
+    AND name = N'IDX_reservation_code_'
+)
+BEGIN
+    CREATE INDEX IDX_reservation_code_
+    ON dbo.reservation(reservation_code);
+END;
+ ELSE
+Begin
+print 'El índice ya ah sido creado!!!'
 End
 GO
 
@@ -658,3 +676,24 @@ WITH(
 	FIRSTROW = 1
 )
 */
+
+BEGIN TRANSACTION;
+	IF NOT EXISTS (SELECT 1 FROM document_type WHERE name = 'Carnet de Identidad')
+	BEGIN
+		INSERT INTO document_type (name) VALUES ('Carnet de Identidad');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM document_type WHERE name = 'Pasaporte')
+	BEGIN
+		INSERT INTO document_type (name) VALUES ('Pasaporte');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM document_type WHERE name = 'Licencia de Conducir')
+	BEGIN
+		INSERT INTO document_type (name) VALUES ('Licencia de Conducir');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM document_type WHERE name = 'Libreta de Servicio Militar')
+	BEGIN
+		INSERT INTO document_type (name) VALUES ('Libreta de Servicio Militar');
+	END;
+COMMIT TRANSACTION;
+
+
