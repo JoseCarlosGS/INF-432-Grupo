@@ -1,4 +1,6 @@
 ﻿--- ELIMINACION COMPLETA DEL DATABASE
+
+/*
 USE master;
 GO
 ALTER DATABASE AirlineReservation
@@ -7,17 +9,22 @@ WITH ROLLBACK IMMEDIATE;
 GO
 DROP DATABASE AirlineReservation;
 GO
+
+*/
 ------------ FIN DE METODOS PARA ELIMINAR
 
+If Not Exists(select * from sys.indexes where object_id=OBJECT_ID (N'dbo.frequent_flyer_card')and name='_IDX_frequent_flyer_card_ffc_number_')
+Begin
 ----- CREACION DE LA BASE DE DATOS ---------------
 IF NOT EXISTS(SELECT name FROM master.sys.databases WHERE name='AirlineReservation')
-BEGIN	
-CREATE DATABASE AirlineReservation;
-PRINT'Base de datos creada exitosamente';
-END
- ELSE
-BEGIN
-	PRINT 'La base de datos ya existe';
+	BEGIN	
+	CREATE DATABASE AirlineReservation;
+	PRINT'Base de datos creada exitosamente';
+	END
+ELSE
+	BEGIN
+		PRINT 'La base de datos ya existe';
+	END
 END
 GO
 --------------
@@ -28,7 +35,7 @@ GO
 --DROP TABLE customers;
 --GO
 
-select * from person
+
 ------- persona------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'person') AND type = N'U')
 BEGIN
@@ -39,21 +46,18 @@ BEGIN
     );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla person';
 END
 GO
-If not Exists(Select * from sys.indexes where object_id=OBJECT_ID(N'dbo.customer')and name='IDX_person_name_')
+If not Exists(Select * from sys.indexes where object_id=OBJECT_ID(N'dbo.person')and name='IDX_person_name_')
 Begin
 CREATE INDEX IDX_person_name_ ON person([name]);
 End
  Else
  Begin
-  print'El índice ya ha sido creado!!'
+  print'El índice de person_name ya ha sido creado!!'
  End
 GO
-
-select * from customer
-TRUNCATE TABLE customer;
 
 ----- CLIENTE---------------------
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'customer') AND type = N'U')
@@ -68,7 +72,7 @@ BEGIN
 );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla customer';
 END
 GO
 
@@ -123,7 +127,7 @@ CREATE TABLE airport(
 END
  ELSE
 BEGIN
-print'La tabla ya existe!!!'
+print'La tabla airport ya existe!!!'
 END
 GO
 
@@ -139,7 +143,7 @@ BEGIN
 END;
  ELSE
 Begin
-print 'El índice ya ah sido creado!!!'
+print 'El índice airport_name ya ah sido creado!!!'
 End
 GO
 
@@ -156,7 +160,7 @@ CREATE TABLE airline (
 END
  ELSE
  BEGIN
-  print 'La tabla ya existe!!!';
+  print 'La tabla airline ya existe!!!';
  END
 GO
 
@@ -166,7 +170,7 @@ CREATE INDEX IDX_airline_name ON airline([name]);
 END 
  ELSE
 BEGIN
-  print 'El índice ya ah sido creado';
+  print 'El índice airline_name ya ah sido creado';
 END
 GO
 
@@ -191,7 +195,7 @@ CREATE TABLE flight_number(
 End
  Else
 Begin
-print 'La tabla ya existe!!!'
+print 'La tabla flight_number ya existe!!!'
 End
 GO
 
@@ -214,24 +218,23 @@ BEGIN
 );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla frequent_flyer_card';
 END
 GO
-
-If Not Exists(select * from sys.indexes where object_id=OBJECT_ID (N'dbo.frequent_flyer_card')and name='_IDX_frequent_flyer_card_ffc_number_')
-Begin
-CREATE INDEX _IDX_frequent_flyer_card_ffc_number_ ON frequent_flyer_card(ffc_number);
- print'índice creado exitosamente!!';
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE object_id=OBJECT_ID(N'dbo.frequent_flyer_card')and name=N'IDX_frequent_flyer_card_ffc_number')
+BEGIN	
+	CREATE INDEX IDX_frequent_flyer_card_ffc_number ON frequent_flyer_card(ffc_number);
+	print'índice creado exitosamente!!';
 End
  Else
 Begin
- print 'El índice ya ah sido creado';
+ print 'El índice f_f_c_number ya ah sido creado';
 End
 GO
 
 
 -------------------- TIPO DE DOCUMENTO ------------------
-IF NOT EXISTS( SELECT* FROM sys.objects WHERE object_id=OBJECT_ID (N'document_type(') and type=N'U')
+IF NOT EXISTS( SELECT* FROM sys.objects WHERE object_id=OBJECT_ID (N'document_type') and type=N'U')
 BEGIN
 CREATE TABLE document_type(
 	id INT PRIMARY KEY IDENTITY(1,1),
@@ -264,7 +267,7 @@ CREATE TABLE identification_document(
 END
  ELSE
 BEGIN
-print 'La tabla ya existe!!!';
+print 'La tabla identification_document ya existe!!!';
 END
 GO
 
@@ -275,11 +278,11 @@ CREATE INDEX IDX_identification_document_document_number_ ON identification_docu
 End
  Else
 Begin
- print'El índice ya ah sido creado';
+ print'El índice i_doc_doc_number ya ah sido creado';
 End
 GO
 
-select * from payment_method
+
 ------------------ METODO DE PAGO  -------------
 If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'payment_method')and type=N'U')
 Begin
@@ -291,7 +294,7 @@ CREATE TABLE payment_method (
 End
  Else
 Begin
-print 'La tabla ya existe'
+print 'La tabla payment_method ya existe'
 End
 GO
 
@@ -309,7 +312,7 @@ CREATE TABLE payment (
 End
  Else
 Begin
-print 'La tabla ya existe'
+print 'La tabla payment ya existe'
 End
 GO
 
@@ -325,7 +328,7 @@ CREATE TABLE plane_model(
 End
  Else
 Begin
-print'La tabla ya existe!!!';
+print'La tabla plane_model ya existe!!!';
 End
 GO
 
@@ -347,7 +350,7 @@ CREATE TABLE airplane(
 End
  Else
  Begin
- print 'La tabla ya existe!!!';
+ print 'La tabla airplane ya existe!!!';
  End
 GO
 
@@ -371,11 +374,10 @@ CREATE TABLE flight(
 End
  Else
 Begin
-print'La tabla ya existe!!!'; 
+print'La tabla flight ya existe!!!'; 
 End
 GO
 
-select * from reservation
 ------------------ RESERVAS -------------
 If not Exists(Select *from sys.objects where object_id=OBJECT_ID(N'reservation')and type=N'U')
 Begin
@@ -395,7 +397,7 @@ CREATE TABLE reservation (
 End
  Else
 Begin
-print 'La tabla ya existe'
+print 'La tabla reservation ya existe'
 End
 GO
 
@@ -411,7 +413,7 @@ BEGIN
 END;
  ELSE
 Begin
-print 'El índice ya ah sido creado!!!'
+print 'El índice reservation_code ya ah sido creado!!!'
 End
 GO
 
@@ -434,7 +436,7 @@ BEGIN
 );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla ticket';
 END
 GO
 
@@ -452,7 +454,7 @@ CREATE TABLE checkin (
 End
  Else
 Begin
-print 'La tabla ya existe'
+print 'La tabla checkin ya existe'
 End
 GO
 
@@ -470,7 +472,7 @@ CREATE TABLE cancellation (
 End
  Else
 Begin
-print 'La tabla ya existe'
+print 'La tabla cancelation ya existe'
 End
 GO
 
@@ -486,7 +488,7 @@ BEGIN
     );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla coupon_class';
 END
 GO
 
@@ -512,7 +514,7 @@ CREATE TABLE coupon(
 End
  Else
 Begin
-print 'La tabla ya existe!!!';
+print 'La tabla coupon ya existe!!!';
 End
 GO
 
@@ -533,7 +535,7 @@ CREATE TABLE pieces_of_luggage(
 End
  Else
 Begin
- print'La tabla ya existe!!!';
+ print'La tabla lugage ya existe!!!';
 End
 GO
 
@@ -556,7 +558,7 @@ CREATE TABLE seat(
 End
  Else
 Begin
- print'La tabla ya existe!!!';
+ print'La tabla seat ya existe!!!';
 End
 GO
 
@@ -578,7 +580,7 @@ CREATE TABLE available_seat(
 End
  Else
  Begin
-  print'La tabla ya existe!!!';
+  print'La tabla available_seat ya existe!!!';
  End
 GO
 
@@ -604,7 +606,7 @@ CREATE TABLE aircraft_assignment(
 End
  Else
  Begin
- print 'La tabla ya existe!!!';
+ print 'La tabla aircraft_assignament ya existe!!!';
  End
 GO
 
@@ -619,7 +621,7 @@ BEGIN
     );
 END ELSE
 BEGIN
- print 'ya existe la tabla';
+ print 'ya existe la tabla role_flight';
 END
 GO
 
@@ -639,7 +641,7 @@ CREATE TABLE flight_crew (
 End
  Else
  Begin
- print'La tabla ya existe!!!'; 
+ print'La tabla flight_crew ya existe!!!'; 
  End
 GO
 
@@ -661,7 +663,7 @@ CREATE TABLE flight_crew_role (
 End
  Else
  Begin
- print'La tabla ya existe!!!'; 
+ print'La tabla flight_crew_role ya existe!!!'; 
  End
 GO
 
