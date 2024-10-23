@@ -180,6 +180,7 @@ Begin
 CREATE TABLE flight_number(
 	id INT PRIMARY KEY IDENTITY(1,1),
 	departure_time TIME NOT NULL,
+	arrival_time TIME NOT NULL,
 	"description" VARCHAR(255),
 	"type" VARCHAR(255) NOT NULL,
 	airline VARCHAR(255) NOT NULL,
@@ -306,6 +307,7 @@ CREATE TABLE payment (
 	amount FLOAT NOT NULL,
 	date_of_pay DATE NOT NULL,
 	id_payment_method INT NOT NULL,
+	FOREIGN KEY (id_payment_method) REFERENCES payment_method(id),
     -- CONSTRAINT CHK_date_of_pay CHECK(date_of_pay>getDate()),
 	CONSTRAINT CHK_amount CHECK(amount>=0)
 );
@@ -651,6 +653,9 @@ Begin
 CREATE TABLE flight_crew_role (
     id INT PRIMARY KEY IDENTITY(1,1),
     role VARCHAR(100) NOT NULL,
+	work_start_time TIME NOT NULL,
+	work_end_time TIME NOT NULL,
+	assignment_date DATE NOT NULL,
     id_role INT NOT NULL,
     id_flight INT NOT NULL,
     id_flight_crew INT NOT NULL,
