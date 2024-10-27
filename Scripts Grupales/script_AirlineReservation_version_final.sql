@@ -704,3 +704,262 @@ BEGIN TRANSACTION;
 COMMIT TRANSACTION;
 
 
+BEGIN TRANSACTION;
+
+-- Realizar inserciones en la tabla plane_model solo si los registros no existen
+MERGE plane_model AS target
+USING (VALUES
+    ('Boeing 737', 'https://example.com/graphics/boeing_737.png'),
+    ('Airbus A320', 'https://example.com/graphics/airbus_a320.png'),
+    ('Embraer 190', 'https://example.com/graphics/embraer_190.png'),
+    ('Boeing 747', 'https://example.com/graphics/boeing_747.png'),
+    ('Airbus A380', 'https://example.com/graphics/airbus_a380.png'),
+    ('Boeing 767', 'https://example.com/graphics/boeing_767.png'),
+    ('Boeing 777', 'https://example.com/graphics/boeing_777.png'),
+    ('Boeing 787 Dreamliner', 'https://example.com/graphics/boeing_787.png'),
+    ('Airbus A330', 'https://example.com/graphics/airbus_a330.png'),
+    ('Airbus A350', 'https://example.com/graphics/airbus_a350.png'),
+    ('Bombardier CRJ700', 'https://example.com/graphics/crj700.png'),
+    ('Bombardier CRJ900', 'https://example.com/graphics/crj900.png'),
+    ('Embraer E175', 'https://example.com/graphics/embraer_e175.png'),
+    ('Cessna 172', 'https://example.com/graphics/cessna_172.png'),
+    ('Cessna Citation CJ3', 'https://example.com/graphics/cessna_citation_cj3.png'),
+    ('Dassault Falcon 7X', 'https://example.com/graphics/falcon_7x.png'),
+    ('Gulfstream G650', 'https://example.com/graphics/gulfstream_g650.png'),
+    ('Pilatus PC-12', 'https://example.com/graphics/pilatus_pc12.png'),
+    ('Boeing 727', 'https://example.com/graphics/boeing_727.png'),
+    ('McDonnell Douglas MD-80', 'https://example.com/graphics/md_80.png'),
+    ('Sukhoi Superjet 100', 'https://example.com/graphics/sukhoi_superjet_100.png'),
+    ('Tupolev Tu-154', 'https://example.com/graphics/tu_154.png'),
+    ('Antonov An-225', 'https://example.com/graphics/an_225.png'),
+    ('Concorde', 'https://example.com/graphics/concorde.png')
+) AS source (description, graphic)
+ON target.description = source.description
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (description, graphic)
+    VALUES (source.description, source.graphic);
+
+-- Commit the transaction
+COMMIT TRANSACTION;
+
+-----DATOS PARA AEROLINEA---------------------------
+BEGIN TRANSACTION;
+
+-- Realizar inserciones en la tabla airline solo si los registros no existen
+MERGE airline AS target
+USING (VALUES
+    ('Delta Airlines', 'DL', 'https://example.com/logos/delta_airlines.png'),
+    ('American Airlines', 'AA', 'https://example.com/logos/american_airlines.png'),
+    ('United Airlines', 'UA', 'https://example.com/logos/united_airlines.png'),
+    ('Southwest Airlines', 'WN', 'https://example.com/logos/southwest_airlines.png'),
+    ('JetBlue Airways', 'B6', 'https://example.com/logos/jetblue.png'),
+    ('Alaska Airlines', 'AS', 'https://example.com/logos/alaska_airlines.png'),
+    ('Air Canada', 'AC', 'https://example.com/logos/air_canada.png'),
+    ('British Airways', 'BA', 'https://example.com/logos/british_airways.png'),
+    ('Lufthansa', 'LH', 'https://example.com/logos/lufthansa.png'),
+    ('Air France', 'AF', 'https://example.com/logos/air_france.png'),
+    ('Qatar Airways', 'QR', 'https://example.com/logos/qatar_airways.png'),
+    ('Emirates', 'EK', 'https://example.com/logos/emirates.png'),
+    ('Singapore Airlines', 'SQ', 'https://example.com/logos/singapore_airlines.png'),
+    ('Cathay Pacific', 'CX', 'https://example.com/logos/cathay_pacific.png'),
+    ('Qantas Airways', 'QF', 'https://example.com/logos/qantas.png'),
+    ('KLM Royal Dutch Airlines', 'KL', 'https://example.com/logos/klm.png'),
+    ('Turkish Airlines', 'TK', 'https://example.com/logos/turkish_airlines.png'),
+    ('Aeroméxico', 'AM', 'https://example.com/logos/aeromexico.png'),
+    ('LATAM Airlines', 'LA', 'https://example.com/logos/latam_airlines.png'),
+    ('Iberia', 'IB', 'https://example.com/logos/iberia.png'),
+    ('Virgin Atlantic', 'VS', 'https://example.com/logos/virgin_atlantic.png'),
+    ('Japan Airlines', 'JL', 'https://example.com/logos/japan_airlines.png'),
+    ('All Nippon Airways', 'NH', 'https://example.com/logos/ana.png'),
+    ('Thai Airways', 'TG', 'https://example.com/logos/thai_airways.png'),
+    ('Etihad Airways', 'EY', 'https://example.com/logos/etihad_airways.png')
+) AS source ([name], code, Graphic)
+ON target.code = source.code
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT ([name], code, Grapchic)
+    VALUES (source.[name], source.code, source.Graphic);
+
+-- Commit the transaction
+COMMIT TRANSACTION;
+
+------------DATOS PARA AVION-----------------
+BEGIN TRANSACTION;
+
+-- Realizar inserciones en la tabla airplane solo si los registros no existen
+MERGE airplane AS target
+USING (VALUES
+    ('N12345', '2020-01-15', 'Active', 1),   -- Boeing 737
+    ('N54321', '2019-05-10', 'Maintenance', 2), -- Airbus A320
+    ('N98765', '2021-07-20', 'Active', 3),   -- Embraer 190
+    ('N34567', '2018-03-14', 'Inactive', 4), -- Boeing 747
+    ('N76543', '2017-08-22', 'Active', 5),   -- Airbus A380
+    ('N11223', '2022-02-25', 'Active', 6),   -- Boeing 767
+    ('N33221', '2021-09-11', 'Maintenance', 7), -- Boeing 777
+    ('N55678', '2023-01-05', 'Active', 8),   -- Boeing 787 Dreamliner
+    ('N99887', '2020-11-08', 'Active', 9),   -- Airbus A330
+    ('N44455', '2021-06-18', 'Maintenance', 10), -- Airbus A350
+    ('N66677', '2019-04-27', 'Active', 11),  -- Bombardier CRJ700
+    ('N77788', '2018-12-09', 'Active', 12),  -- Bombardier CRJ900
+    ('N88899', '2022-07-03', 'Inactive', 13), -- Embraer E175
+    ('N90909', '2021-02-14', 'Active', 14),  -- Cessna 172
+    ('N10001', '2020-09-30', 'Maintenance', 15), -- Cessna Citation CJ3
+    ('N11111', '2023-03-21', 'Active', 16),  -- Dassault Falcon 7X
+    ('N22222', '2021-10-10', 'Active', 17),  -- Gulfstream G650
+    ('N33333', '2020-06-06', 'Active', 18),  -- Pilatus PC-12
+    ('N44444', '2019-12-22', 'Inactive', 19),-- Boeing 727
+    ('N55555', '2023-01-15', 'Maintenance', 20), -- McDonnell Douglas MD-80
+    ('N66666', '2018-08-16', 'Active', 21),  -- Sukhoi Superjet 100
+    ('N77777', '2017-11-24', 'Inactive', 22),-- Tupolev Tu-154
+    ('N88888', '2020-04-14', 'Active', 23),  -- Antonov An-225
+    ('N99999', '2019-05-18', 'Inactive', 24) -- Concorde
+) AS source (registration_number, begin_of_operation, [status], id_plane_model)
+ON target.registration_number = source.registration_number
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (registration_number, begin_of_operation, [status], id_plane_model)
+    VALUES (source.registration_number, source.begin_of_operation, source.[status], source.id_plane_model);
+
+-- Commit the transaction
+COMMIT TRANSACTION;
+
+----DATOS PARA PAISES-------
+BEGIN TRANSACTION;
+
+-- Insertar países en la tabla country
+MERGE country AS target
+USING (VALUES
+    ('Argentina'),
+    ('Bolivia'),
+    ('Brazil'),
+    ('Chile'),
+    ('Colombia'),
+    ('Ecuador'),
+    ('Paraguay'),
+    ('Peru'),
+    ('Uruguay'),
+    ('Venezuela'),
+    ('United States'),
+    ('Canada'),
+    ('Mexico'),
+    ('United Kingdom'),
+    ('Germany'),
+    ('France'),
+    ('Italy'),
+    ('Spain'),
+    ('Netherlands'),
+    ('Switzerland'),
+    ('Russia'),
+    ('China'),
+    ('Japan'),
+    ('South Korea'),
+    ('India'),
+    ('Australia'),
+    ('New Zealand'),
+    ('Saudi Arabia'),
+    ('Turkey'),
+    ('Israel'),
+    ('South Africa')
+) AS source ([name])
+ON target.[name] = source.[name]
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT ([name])
+    VALUES (source.[name]);
+
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+
+-- Insertar ciudades en la tabla city
+MERGE city AS target
+USING (VALUES
+    ('Buenos Aires', 1),    -- Argentina
+    ('La Paz', 2),          -- Bolivia
+    ('Sao Paulo', 3),       -- Brazil
+    ('Rio de Janeiro', 3),  -- Brazil
+    ('Santiago', 4),        -- Chile
+    ('Bogota', 5),          -- Colombia
+    ('Quito', 6),           -- Ecuador
+    ('Asuncion', 7),        -- Paraguay
+    ('Lima', 8),            -- Peru
+    ('Montevideo', 9),      -- Uruguay
+    ('Caracas', 10),        -- Venezuela
+    ('New York', 11),       -- United States
+    ('Los Angeles', 11),    -- United States
+    ('Toronto', 12),        -- Canada
+    ('Vancouver', 12),      -- Canada
+    ('Mexico City', 13),    -- Mexico
+    ('London', 14),         -- United Kingdom
+    ('Berlin', 15),         -- Germany
+    ('Paris', 16),          -- France
+    ('Rome', 17),           -- Italy
+    ('Madrid', 18),         -- Spain
+    ('Amsterdam', 19),      -- Netherlands
+    ('Zurich', 20),         -- Switzerland
+    ('Moscow', 21),         -- Russia
+    ('Beijing', 22),        -- China
+    ('Tokyo', 23),          -- Japan
+    ('Seoul', 24),          -- South Korea
+    ('Mumbai', 25),         -- India
+    ('Sydney', 26),         -- Australia
+    ('Auckland', 27),       -- New Zealand
+    ('Riyadh', 28),         -- Saudi Arabia
+    ('Istanbul', 29),       -- Turkey
+    ('Tel Aviv', 30),       -- Israel
+    ('Cape Town', 31)       -- South Africa
+) AS source ([name], id_country)
+ON target.[name] = source.[name]
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT ([name], id_country)
+    VALUES (source.[name], source.id_country);
+
+COMMIT TRANSACTION;
+------------------------------DATOS PARA AEROPUERTOS----------------
+
+BEGIN TRANSACTION;
+
+-- Insertar aeropuertos en la tabla airport
+MERGE airport AS target
+USING (VALUES
+    ('Aeropuerto Internacional de Ezeiza', 1),       -- Buenos Aires
+    ('Aeropuerto Internacional El Alto', 2),         -- La Paz
+    ('Aeropuerto Internacional de Guarulhos', 3),    -- Sao Paulo
+    ('Aeropuerto Santos Dumont', 4),                 -- Rio de Janeiro
+    ('Aeropuerto Internacional Arturo Merino Benítez', 5), -- Santiago
+    ('Aeropuerto Internacional El Dorado', 6),       -- Bogota
+    ('Aeropuerto Internacional Mariscal Sucre', 7),  -- Quito
+    ('Aeropuerto Internacional Silvio Pettirossi', 8), -- Asuncion
+    ('Aeropuerto Internacional Jorge Chávez', 9),    -- Lima
+    ('Aeropuerto Internacional de Carrasco', 10),    -- Montevideo
+    ('Aeropuerto Internacional Simón Bolívar', 11),  -- Caracas
+    ('Aeropuerto Internacional John F. Kennedy', 12), -- New York
+    ('Aeropuerto Internacional de Los Ángeles', 13), -- Los Angeles
+    ('Aeropuerto Internacional Toronto Pearson', 14),-- Toronto
+    ('Aeropuerto Internacional de Vancouver', 15),   -- Vancouver
+    ('Aeropuerto Internacional Benito Juárez', 16),  -- Mexico City
+    ('Aeropuerto de Heathrow', 17),                  -- London
+    ('Aeropuerto de Berlín-Brandeburgo', 18),        -- Berlin
+    ('Aeropuerto Charles de Gaulle', 19),            -- Paris
+    ('Aeropuerto Leonardo da Vinci (Fiumicino)', 20),-- Rome
+    ('Aeropuerto Adolfo Suárez Madrid-Barajas', 21), -- Madrid
+    ('Aeropuerto Schiphol', 22),                     -- Amsterdam
+    ('Aeropuerto de Zúrich', 23),                    -- Zurich
+    ('Aeropuerto Internacional de Moscú-Sheremétievo', 24), -- Moscow
+    ('Aeropuerto Internacional de Pekín-Capital', 25), -- Beijing
+    ('Aeropuerto Internacional de Narita', 26),      -- Tokyo
+    ('Aeropuerto Internacional de Incheon', 27),     -- Seoul
+    ('Aeropuerto Internacional Chhatrapati Shivaji', 28), -- Mumbai
+    ('Aeropuerto Internacional Kingsford Smith', 29),-- Sydney
+    ('Aeropuerto Internacional de Auckland', 30),    -- Auckland
+    ('Aeropuerto Internacional Rey Khalid', 31),     -- Riyadh
+    ('Aeropuerto Internacional de Estambul', 32),    -- Istanbul
+    ('Aeropuerto Internacional Ben Gurion', 33),     -- Tel Aviv
+    ('Aeropuerto Internacional de Ciudad del Cabo', 34) -- Cape Town
+) AS source ([name], id_city)
+ON target.[name] = source.[name]
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT ([name], id_city)
+    VALUES (source.[name], source.id_city);
+
+COMMIT TRANSACTION;
+
+
+SELECT * FROM city
