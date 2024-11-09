@@ -1,0 +1,89 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>ProyectoMultidimensional1Soporte</Database>
+    <Server>CARLOS-LAPTOP\CARLOSSQL</Server>
+    <ConnectionString>Data Source=CARLOS-LAPTOP\CARLOSSQL;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>9zDdrQI/4MftvgXoZKU49LKxJ2k=8/11/2024 18:23:208/11/2024 18:23:20</TimeStamp>
+        <ID>
+          <String>Primer Cubo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>WqtirtBFwLBqCfBFptgnKhr/RSc=8/11/2024 18:26:048/11/2024 18:26:03</TimeStamp>
+        <ID>
+          <String>Primer Cubo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>pR2HiLfgUc55CqAQPOIoSkeKuts=8/11/2024 18:31:048/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Dim Destino</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>tZxdtQUf27kJRwVLNZD+2KzU+UY=8/11/2024 18:31:438/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Dim Modelo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>oOlIP5GhG3l/WlytXZJIZF0SFio=8/11/2024 18:31:578/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Dim Aerolinea</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>GuqVjDlzb8+UqnSyqjCF5ZBAwwQ=8/11/2024 18:32:298/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Dim Tiempo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>EUCM1EHsa69vb2ChJT+EJEMY8Cg=8/11/2024 18:28:038/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Fact Avion</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>/ZQ85MSia3I+6sW/jdbcpP/8IMA=8/11/2024 18:32:298/11/2024 18:28:02JRxGjWprmNgFgG+peFWb2L5aMZY=8/11/2024 18:28:038/11/2024 18:28:02</TimeStamp>
+        <ID>
+          <String>Primer Cubo</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>JtPpFjvloXlCU8BUhqzOUzOaP+c=8/11/2024 18:20:188/11/2024 18:20:17</TimeStamp>
+      <ID>
+        <String>ProyectoMultidimensional1Soporte</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2024-11-08T22:43:26.156667Z</LastDeployed>
+</DeploymentSnapshot>

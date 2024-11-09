@@ -1,0 +1,187 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="1e427381-15ac-4988-9aa9-7693fbfeea91" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Fact Avion</ID>
+  <Name>Fact Avion</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="a6efd655-bbc4-4a00-abca-a85049f809f2">
+    <DataSourceViewID>Primer Cubo</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="9e1ba57b-88c4-4349-8f28-566f221b5484">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="3ae0c805-5e91-4c39-b0e0-bda66e7d7705">
+      <ID>Id Aerolinea</ID>
+      <Name>Id Aerolinea</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="36fac3f3-ef6a-427b-9e1a-57e3cb4596eb">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ed0185e3-f289-4a31-a811-66276210362f">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idAerolinea</ColumnID>
+          </Source>
+        </KeyColumn>
+        <KeyColumn dwd:design-time-name="e429e43d-8874-4596-86d8-bb60c6302b01">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="61c694c8-51cc-4e53-a69b-19b795599b95">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idTiempo</ColumnID>
+          </Source>
+        </KeyColumn>
+        <KeyColumn dwd:design-time-name="da7697f8-49b8-46b4-87f6-227341214823">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="24aca6aa-7136-424c-b1b1-b9c0d7f7dc64">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idDestino</ColumnID>
+          </Source>
+        </KeyColumn>
+        <KeyColumn dwd:design-time-name="9088ad04-fbcc-4e4a-b158-d076c984441c">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="00e0246f-5bfd-4b39-8469-a71b8729a0a0">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idModelo</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="4443c1e5-5984-4aa8-ad07-62036afe75df">
+        <DataType>WChar</DataType>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="a109f5d0-cc27-4c54-99e7-5561cfb96ade">
+          <TableID>dbo_factAvion</TableID>
+          <ColumnID>idAerolinea</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="9c5066ba-2d3e-4301-817b-6500fb5a728e">
+          <AttributeID>Id Destino</AttributeID>
+          <Name>Id Destino</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="970b07a6-e149-4b6a-9fa2-ad0dbefc6bb2">
+          <AttributeID>Id Modelo</AttributeID>
+          <Name>Id Modelo</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="faa11d0d-35f4-43f0-9271-53579df2c352">
+          <AttributeID>Fact Avion - Id Aerolinea</AttributeID>
+          <Name>Fact Avion - Id Aerolinea</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="d802ac03-f113-4ed9-8ab8-8f24858829ba">
+          <AttributeID>Id Tiempo</AttributeID>
+          <Name>Id Tiempo</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="13c6cc95-38b0-4883-a4a6-d5b7a5810c75">
+      <ID>Id Destino</ID>
+      <Name>Id Destino</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="0b500ec9-2d31-4f73-b003-919ba5f735db">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="8ffff51c-97dd-417f-bd01-12648fc880b4">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idDestino</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="093e9b57-e992-45ca-8d8f-bded8e846e8e">
+      <ID>Id Modelo</ID>
+      <Name>Id Modelo</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="66dfb459-c718-4b16-a6b9-92888d53e7da">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2806cd9a-eace-4e89-8bce-44405104df6d">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idModelo</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="445107ba-ca29-47f1-8615-77ce459167df">
+      <ID>Fact Avion - Id Aerolinea</ID>
+      <Name>Fact Avion - Id Aerolinea</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="63d963e9-5f14-451e-9c54-f6aa9d872f36">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="dac7c3c0-d2fd-4a13-95e1-da409022593d">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idAerolinea</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6e5faa51-664f-4c36-b95d-694a00826972">
+      <ID>Id Tiempo</ID>
+      <Name>Id Tiempo</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="b4b606b2-b165-4e87-9ab0-8a6cf9bfe705">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="b05fd631-c41c-4a66-af68-6c472a96a159">
+            <TableID>dbo_factAvion</TableID>
+            <ColumnID>idTiempo</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

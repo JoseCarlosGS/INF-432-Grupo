@@ -1,5 +1,4 @@
 BEGIN TRANSACTION;
-
 -- Insertar vuelos en la tabla flight_number
 MERGE flight_number AS target
 USING (VALUES
@@ -181,3 +180,5 @@ select * from airline
 select * from airport
 select * from flight_number
 select * from flight
+select * from country
+select * from city

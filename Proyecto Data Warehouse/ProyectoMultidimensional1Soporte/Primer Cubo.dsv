@@ -1,0 +1,177 @@
+﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="e531f840-2d45-4e4c-afe2-5472ee04f4c2" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Primer Cubo</ID>
+  <Name>Primer Cubo</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:CurrentLayout</Name>
+      <Value>_ALL_TABLES_</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:SchemaRestriction</Name>
+      <Value></Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:RetrieveRelationships</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:Layouts</Name>
+      <Value>
+        <Layouts xmlns="">
+          <Diagram>
+            <Name>_ALL_TABLES_</Name>
+            <DiagramLayout />
+            <ShowRelationshipNames>False</ShowRelationshipNames>
+            <UseDiagramDefaultLayout>True</UseDiagramDefaultLayout>
+            <DiagramViewPortLeft>0</DiagramViewPortLeft>
+            <DiagramViewPortTop>0</DiagramViewPortTop>
+            <DiagramBoundingLeft>0</DiagramBoundingLeft>
+            <DiagramBoundingTop>0</DiagramBoundingTop>
+            <DiagramZoom>100</DiagramZoom>
+          </Diagram>
+        </Layouts>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <DataSourceID>Primer Cubo</DataSourceID>
+  <Schema>
+    <xs:schema id="Primer_x0020_Cubo" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+      <xs:element name="Primer_x0020_Cubo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="c9958e40-dde7-44a6-ba18-3a6c782b75c5">
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="dbo_factAvion" msprop:DbTableName="factAvion" msprop:FriendlyName="factAvion" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="eb7938f2-bf42-4d00-80fa-8480ef8c0c43">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="idAerolinea" msprop:FriendlyName="idAerolinea" msprop:DbColumnName="idAerolinea" msprop:design-time-name="19836689-1d61-4b49-9320-490406650a63" type="xs:int" />
+                  <xs:element name="idTiempo" msprop:FriendlyName="idTiempo" msprop:DbColumnName="idTiempo" msprop:design-time-name="78915694-2e80-4b22-b761-0522b3363b14" type="xs:int" />
+                  <xs:element name="idDestino" msprop:FriendlyName="idDestino" msprop:DbColumnName="idDestino" msprop:design-time-name="2a7d8b90-bce8-4dbc-825f-b0bf09edfa9f" type="xs:int" />
+                  <xs:element name="idModelo" msprop:FriendlyName="idModelo" msprop:DbColumnName="idModelo" msprop:design-time-name="63ef4d11-dfd3-4b42-9b93-199fa66e2ca3" type="xs:int" />
+                  <xs:element name="avion" msprop:FriendlyName="avion" msprop:DbColumnName="avion" msprop:design-time-name="e8ab2a21-8ba7-43d1-9d02-eebb5aa52157" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="15" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="horasVuelo" msprop:FriendlyName="horasVuelo" msprop:DbColumnName="horasVuelo" msprop:design-time-name="d1b21158-b78d-46ee-ac18-3976a682b06c" type="xs:int" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_dimAerolinea" msprop:DbTableName="dimAerolinea" msprop:FriendlyName="dimAerolinea" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="6b21e5a4-00c2-4711-9051-ea9d7f3c8e59">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="idAerolinea" msprop:FriendlyName="idAerolinea" msprop:DbColumnName="idAerolinea" msprop:design-time-name="d452a23d-84f6-4d89-b7b3-b9b0a21161d4" type="xs:int" />
+                  <xs:element name="aerolinea" msprop:FriendlyName="aerolinea" msprop:DbColumnName="aerolinea" msprop:design-time-name="9f2a0910-7ddf-40a7-9914-3a1a9d4a9f3c">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_dimDestino" msprop:DbTableName="dimDestino" msprop:FriendlyName="dimDestino" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="0b4f8e7d-5f07-4d61-9038-f4bc5bfaf583">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="idDestino" msprop:FriendlyName="idDestino" msprop:DbColumnName="idDestino" msprop:design-time-name="c5f63434-c3d5-4370-9403-71cef197a240" type="xs:int" />
+                  <xs:element name="pais" msprop:FriendlyName="pais" msprop:DbColumnName="pais" msprop:design-time-name="6749100f-3271-4da5-bf4d-c930d4d3e179" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="ciudad" msprop:FriendlyName="ciudad" msprop:DbColumnName="ciudad" msprop:design-time-name="2aa5b9dd-4abd-4f37-b648-5e7d304602c2" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="aeropuerto" msprop:FriendlyName="aeropuerto" msprop:DbColumnName="aeropuerto" msprop:design-time-name="f97e1f46-683b-4112-af01-86d067ab42a2" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_dimModelo" msprop:DbTableName="dimModelo" msprop:FriendlyName="dimModelo" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="a075816b-d86b-420d-8791-3ac8add55463">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="idModelo" msprop:FriendlyName="idModelo" msprop:DbColumnName="idModelo" msprop:design-time-name="f793f2ca-e898-4bdb-afd1-a6aed5383e30" type="xs:int" />
+                  <xs:element name="descripcion" msprop:FriendlyName="descripcion" msprop:DbColumnName="descripcion" msprop:design-time-name="3662f25d-5dfa-4fbc-89d4-7c4b53998eef">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_dimTiempo" msprop:DbTableName="dimTiempo" msprop:FriendlyName="dimTiempo" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="88181092-b5c3-44b3-9ce0-9bcbf97d44e4">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="idTiempo" msprop:FriendlyName="idTiempo" msprop:DbColumnName="idTiempo" msprop:design-time-name="4cebbd34-31a8-48d3-b440-beca3b9f7c6f" type="xs:int" />
+                  <xs:element name="año" msprop:FriendlyName="año" msprop:DbColumnName="año" msprop:design-time-name="dcbc8415-bb1e-4611-a578-7f30959e4d9a" type="xs:int" minOccurs="0" />
+                  <xs:element name="mes" msprop:FriendlyName="mes" msprop:DbColumnName="mes" msprop:design-time-name="e8635104-135c-4de5-b9f3-570c0d02310e" type="xs:int" minOccurs="0" />
+                  <xs:element name="dia" msprop:FriendlyName="dia" msprop:DbColumnName="dia" msprop:design-time-name="463f2785-b8fa-45ef-a35f-b653714fb273" type="xs:int" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+        <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_factAvion" />
+          <xs:field xpath="idAerolinea" />
+          <xs:field xpath="idTiempo" />
+          <xs:field xpath="idDestino" />
+          <xs:field xpath="idModelo" />
+        </xs:unique>
+        <xs:unique name="dbo_dimAerolinea_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_dimAerolinea" />
+          <xs:field xpath="idAerolinea" />
+        </xs:unique>
+        <xs:unique name="dbo_dimDestino_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_dimDestino" />
+          <xs:field xpath="idDestino" />
+        </xs:unique>
+        <xs:unique name="dbo_dimModelo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_dimModelo" />
+          <xs:field xpath="idModelo" />
+        </xs:unique>
+        <xs:unique name="dbo_dimTiempo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_dimTiempo" />
+          <xs:field xpath="idTiempo" />
+        </xs:unique>
+        <xs:keyref name="FK__factAvion__idTie__5FB337D6" refer="dbo_dimTiempo_Constraint1">
+          <xs:selector xpath=".//dbo_factAvion" />
+          <xs:field xpath="idTiempo" />
+        </xs:keyref>
+        <xs:keyref name="FK__factAvion__idAer__5EBF139D" refer="dbo_dimAerolinea_Constraint1">
+          <xs:selector xpath=".//dbo_factAvion" />
+          <xs:field xpath="idAerolinea" />
+        </xs:keyref>
+        <xs:keyref name="FK__factAvion__idMod__619B8048" refer="dbo_dimModelo_Constraint1">
+          <xs:selector xpath=".//dbo_factAvion" />
+          <xs:field xpath="idModelo" />
+        </xs:keyref>
+        <xs:keyref name="FK__factAvion__idDes__60A75C0F" refer="dbo_dimDestino_Constraint1">
+          <xs:selector xpath=".//dbo_factAvion" />
+          <xs:field xpath="idDestino" />
+        </xs:keyref>
+      </xs:element>
+    </xs:schema>
+    <Primer_x0020_Cubo xmlns="" />
+  </Schema>
+</DataSourceView>
