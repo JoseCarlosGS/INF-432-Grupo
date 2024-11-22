@@ -19,56 +19,56 @@
     <ObjectSnapshots>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
-        <TimeStamp>9zDdrQI/4MftvgXoZKU49LKxJ2k=8/11/2024 18:23:208/11/2024 18:23:20</TimeStamp>
+        <TimeStamp>9zDdrQI/4MftvgXoZKU49LKxJ2k=8/11/2024 18:23:208/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Primer Cubo</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.DataSourceView</Type>
-        <TimeStamp>WqtirtBFwLBqCfBFptgnKhr/RSc=8/11/2024 18:26:048/11/2024 18:26:03</TimeStamp>
+        <TimeStamp>WqtirtBFwLBqCfBFptgnKhr/RSc=8/11/2024 18:26:048/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Primer Cubo</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Dimension</Type>
-        <TimeStamp>pR2HiLfgUc55CqAQPOIoSkeKuts=8/11/2024 18:31:048/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>pR2HiLfgUc55CqAQPOIoSkeKuts=8/11/2024 18:31:048/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Dim Destino</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Dimension</Type>
-        <TimeStamp>tZxdtQUf27kJRwVLNZD+2KzU+UY=8/11/2024 18:31:438/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>tZxdtQUf27kJRwVLNZD+2KzU+UY=8/11/2024 18:31:438/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Dim Modelo</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Dimension</Type>
-        <TimeStamp>oOlIP5GhG3l/WlytXZJIZF0SFio=8/11/2024 18:31:578/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>oOlIP5GhG3l/WlytXZJIZF0SFio=8/11/2024 18:31:578/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Dim Aerolinea</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Dimension</Type>
-        <TimeStamp>GuqVjDlzb8+UqnSyqjCF5ZBAwwQ=8/11/2024 18:32:298/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>GuqVjDlzb8+UqnSyqjCF5ZBAwwQ=8/11/2024 18:32:298/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Dim Tiempo</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Dimension</Type>
-        <TimeStamp>EUCM1EHsa69vb2ChJT+EJEMY8Cg=8/11/2024 18:28:038/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>EUCM1EHsa69vb2ChJT+EJEMY8Cg=8/11/2024 18:28:038/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Fact Avion</String>
         </ID>
       </ObjectSnapshot>
       <ObjectSnapshot>
         <Type>Microsoft.AnalysisServices.Cube</Type>
-        <TimeStamp>/ZQ85MSia3I+6sW/jdbcpP/8IMA=8/11/2024 18:32:298/11/2024 18:28:02JRxGjWprmNgFgG+peFWb2L5aMZY=8/11/2024 18:28:038/11/2024 18:28:02</TimeStamp>
+        <TimeStamp>/ZQ85MSia3I+6sW/jdbcpP/8IMA=8/11/2024 18:32:298/11/2024 20:50:25JRxGjWprmNgFgG+peFWb2L5aMZY=8/11/2024 18:28:038/11/2024 20:50:25</TimeStamp>
         <ID>
           <String>Primer Cubo</String>
         </ID>
@@ -76,7 +76,7 @@
     </ObjectSnapshots>
     <DatabaseSnapshot>
       <Type>Microsoft.AnalysisServices.Database</Type>
-      <TimeStamp>JtPpFjvloXlCU8BUhqzOUzOaP+c=8/11/2024 18:20:188/11/2024 18:20:17</TimeStamp>
+      <TimeStamp>JtPpFjvloXlCU8BUhqzOUzOaP+c=8/11/2024 18:20:188/11/2024 20:50:25</TimeStamp>
       <ID>
         <String>ProyectoMultidimensional1Soporte</String>
       </ID>
@@ -85,5 +85,5 @@
   </Snapshot>
   <AssemblyLocations />
   <ProcessingComplete>true</ProcessingComplete>
-  <LastDeployed>2024-11-08T22:43:26.156667Z</LastDeployed>
+  <LastDeployed>2024-11-11T22:52:51.053333Z</LastDeployed>
 </DeploymentSnapshot>

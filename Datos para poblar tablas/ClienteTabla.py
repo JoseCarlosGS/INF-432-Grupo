@@ -1,7 +1,7 @@
 import pyodbc
 import random
 
-conn = pyodbc.connect('DRIVER={SQL Server};SERVER=HP\SQLEXPRESS;DATABASE=AirlineReservation;Trusted_Connection=yes')
+conn = pyodbc.connect('DRIVER={SQL Server};SERVER=CARLOS-LAPTOP\CARLOSSQL;DATABASE=AirlineReservation;Trusted_Connection=yes')
 cursor = conn.cursor()
 
 #cursor.execute("TRUNCATE TABLE customer")

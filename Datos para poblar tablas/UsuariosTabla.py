@@ -2,7 +2,7 @@ import pyodbc
 import random
 
 # Conexión a SQL Server
-conn = pyodbc.connect('DRIVER={SQL Server};SERVER=HP\SQLEXPRESS;DATABASE=AirlineReservation;Trusted_Connection=yes')
+conn = pyodbc.connect('DRIVER={SQL Server};SERVER=CARLOS-LAPTOP\CARLOSSQL;DATABASE=AirlineReservation;Trusted_Connection=yes')
 cursor = conn.cursor()
 
 # Listas de nombres y apellidos para generar datos aleatorios
@@ -17,8 +17,8 @@ apellidos = [
     'Navarro', 'Romero', 'Flores', 'Mejía', 'Campos', 'Rivas', 'Castro', 'Vargas', 'Acosta', 'Moreno'
 ]
 # Insertar 160,000 registros
-for i in range(160000):
-    nombre = random.choice(nombres)
+for i in range(2000):
+    nombre = random.choice(nombres) + random.choice(nombres)
     apellido = random.choice(apellidos)
     cursor.execute("INSERT INTO person ([name], last_name) VALUES (?, ?)", (nombre, apellido))
 

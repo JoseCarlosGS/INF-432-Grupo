@@ -647,6 +647,9 @@ End
  End
 GO
 
+/*ALTER TABLE flight_crew
+DROP COLUMN role;*/
+
 ---------------- 3 TRIPULACION DE VUELO-rol ------------------
 If not exists(select* from sys.objects where object_id=OBJECT_ID(N'flight_crew_role')and type=N'U')
 Begin
@@ -963,3 +966,22 @@ COMMIT TRANSACTION;
 
 
 SELECT * FROM city
+
+BEGIN TRANSACTION;
+	IF NOT EXISTS (SELECT 1 FROM role_flight WHERE name = 'Capitan')
+	BEGIN
+		INSERT INTO role_flight (name) VALUES ('Capitan');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM role_flight WHERE name = 'Primer Oficial')
+	BEGIN
+		INSERT INTO role_flight (name) VALUES ('Primer Oficial');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM role_flight WHERE name = 'Azafata')
+	BEGIN
+		INSERT INTO role_flight (name) VALUES ('Azafata');
+	END;
+	IF NOT EXISTS (SELECT 1 FROM role_flight WHERE name = 'Auxiliar de Vuelo')
+	BEGIN
+		INSERT INTO role_flight (name) VALUES ('Auxiliar de Vuelo');
+	END;
+COMMIT TRANSACTION;
